@@ -1,0 +1,112 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "properties": {
+        "id": 154477,
+        "version": "1.0.0",
+        "type": "source code",
+        "status": "candidate",
+        "submissionDate": "2015-10-06",
+        "language": "java",
+        "author": "IARPA STONESOUP Test and Evaluation team",
+        "description": "This test takes a string. It locks a lock upon encountering the first '1' in the string, then unlocks the lock each time it subsequently encounters an '1'. If there are three or more '1' characters in the string, this will cause multiple unlocks and an exception.\nMetadata\n - Base program: Coffee MUD\n - Source Taint: SOCKET\n - Data Type: SIMPLE\n - Data Flow: BASIC\n - Control Flow: INDIRECTLY_RECURSIVE",
+        "state": "bad",
+        "application": "cpe:2.3:a:bo_zimmerman:coffeemud:5.8:*:*:*:*:*:*:*",
+        "dependencies": [
+          "stonesoup-vm-v3.0",
+          "coffeemud-v5.8"
+        ]
+      },
+      "tool": {
+        "driver": {
+          "name": "SARD - SAMATE",
+          "fullName": "Software Assurance Reference Dataset Project",
+          "informationUri": "https://samate.nist.gov/SARD/",
+          "version": "5.0.0",
+          "organization": "NIST",
+          "supportedTaxonomies": [
+            {
+              "name": "CWE",
+              "index": 0
+            }
+          ]
+        }
+      },
+      "artifacts": [
+        {
+          "location": {
+            "uri": "J-C765A-CMUD-01-ST03-DT02-DF11-CF02-01.xml"
+          },
+          "length": 87378,
+          "sourceLanguage": "xml",
+          "hashes": {
+            "sha-256": "6c6112e477ffaebbde2c654b0c9439fd55a813a4bf98cf1c8a82838a3a2a7ceb"
+          }
+        },
+        {
+          "location": {
+            "uri": "src/com/planet_ink/coffee_mud/Common/interfaces/Session.java"
+          },
+          "length": 62419,
+          "sourceLanguage": "java",
+          "hashes": {
+            "sha-256": "3ad674305b56b85a1cf02a7b65e9ff2834f02a4147f1a3a3fe0a92c43575910c"
+          }
+        }
+      ],
+      "taxonomies": [
+        {
+          "name": "CWE",
+          "version": "4.6",
+          "informationUri": "https://cwe.mitre.org/data/published/cwe_v4.6.pdf",
+          "downloadUri": "https://cwe.mitre.org/data/xml/cwec_v4.6.xml.zip",
+          "organization": "MITRE",
+          "shortDescription": {
+            "text": "The MITRE Common Weakness Enumeration"
+          },
+          "isComprehensive": false,
+          "taxa": [
+            {
+              "id": "765",
+              "name": "Multiple Unlocks of a Critical Resource"
+            }
+          ]
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "CWE-765",
+          "message": {
+            "text": "Multiple Unlocks of a Critical Resource."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/com/planet_ink/coffee_mud/Common/interfaces/Session.java",
+                  "index": 1
+                },
+                "region": {
+                  "startLine": 1481,
+                  "endLine": 1497
+                }
+              }
+            }
+          ],
+          "taxa": [
+            {
+              "toolComponent": {
+                "name": "CWE",
+                "index": 0
+              },
+              "id": "765",
+              "index": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

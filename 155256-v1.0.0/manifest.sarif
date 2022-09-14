@@ -1,0 +1,111 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "properties": {
+        "id": 155256,
+        "version": "1.0.0",
+        "type": "source code",
+        "status": "candidate",
+        "submissionDate": "2015-10-06",
+        "language": "java",
+        "author": "IARPA STONESOUP Test and Evaluation team",
+        "description": "This test takes in a value from an argument and uses it as a array accessor resulting in an ArrayIndexOutOfBounds exception.\n\nMetadata\n-Base program: Coffee MUD\n- Source Taint: SOCKET\n- Data Type: simple\n- Data Flow: java_generics\n- Control Flow: function_invocation_overload",
+        "state": "bad",
+        "application": "cpe:2.3:a:bo_zimmerman:coffeemud:5.8:*:*:*:*:*:*:*",
+        "dependencies": [
+          "stonesoup-vm-v3.0",
+          "coffeemud-v5.8"
+        ]
+      },
+      "tool": {
+        "driver": {
+          "name": "SARD - SAMATE",
+          "fullName": "Software Assurance Reference Dataset Project",
+          "informationUri": "https://samate.nist.gov/SARD/",
+          "version": "5.0.0",
+          "organization": "NIST",
+          "supportedTaxonomies": [
+            {
+              "name": "CWE",
+              "index": 0
+            }
+          ]
+        }
+      },
+      "artifacts": [
+        {
+          "location": {
+            "uri": "J-C839A-CMUD-02-ST03-DT02-DF18-CF26-01.xml"
+          },
+          "length": 87479,
+          "sourceLanguage": "xml",
+          "hashes": {
+            "sha-256": "bd380e66997bc01626bddc792a6ee65156fc09e70cc9777429259e7c93e9a67a"
+          }
+        },
+        {
+          "location": {
+            "uri": "src/com/planet_ink/coffee_mud/Libraries/CharCreation.java"
+          },
+          "length": 130036,
+          "sourceLanguage": "java",
+          "hashes": {
+            "sha-256": "cbe4bffca06496e051a49cd6337caeb5bb9618a7106ca423f99162753c954a89"
+          }
+        }
+      ],
+      "taxonomies": [
+        {
+          "name": "CWE",
+          "version": "4.6",
+          "informationUri": "https://cwe.mitre.org/data/published/cwe_v4.6.pdf",
+          "downloadUri": "https://cwe.mitre.org/data/xml/cwec_v4.6.xml.zip",
+          "organization": "MITRE",
+          "shortDescription": {
+            "text": "The MITRE Common Weakness Enumeration"
+          },
+          "isComprehensive": false,
+          "taxa": [
+            {
+              "id": "839",
+              "name": "Numeric Range Comparison Without Minimum Check"
+            }
+          ]
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "CWE-839",
+          "message": {
+            "text": "Numeric Range Comparison Without Minimum Check."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/com/planet_ink/coffee_mud/Libraries/CharCreation.java",
+                  "index": 1
+                },
+                "region": {
+                  "startLine": 3466
+                }
+              }
+            }
+          ],
+          "taxa": [
+            {
+              "toolComponent": {
+                "name": "CWE",
+                "index": 0
+              },
+              "id": "839",
+              "index": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

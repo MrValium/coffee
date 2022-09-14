@@ -1,0 +1,112 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "properties": {
+        "id": 155384,
+        "version": "1.0.0",
+        "type": "source code",
+        "status": "candidate",
+        "submissionDate": "2015-10-06",
+        "language": "java",
+        "author": "IARPA STONESOUP Test and Evaluation team",
+        "description": "This test takes in a value passed as an argument\n This value is originally signed, but is converted\n to unsigned when stored in a char. This value is then\n used to index an allocated array with a signed value.\nMetadata\n - Base program: Coffee MUD\n - Source Taint: SOCKET\n - Data Type: VOID_POINTER\n - Data Flow: JAVA_GENERICS\n - Control Flow: INTERUPT_CONTINUE",
+        "state": "bad",
+        "application": "cpe:2.3:a:bo_zimmerman:coffeemud:5.8:*:*:*:*:*:*:*",
+        "dependencies": [
+          "stonesoup-vm-v3.0",
+          "coffeemud-v5.8"
+        ]
+      },
+      "tool": {
+        "driver": {
+          "name": "SARD - SAMATE",
+          "fullName": "Software Assurance Reference Dataset Project",
+          "informationUri": "https://samate.nist.gov/SARD/",
+          "version": "5.0.0",
+          "organization": "NIST",
+          "supportedTaxonomies": [
+            {
+              "name": "CWE",
+              "index": 0
+            }
+          ]
+        }
+      },
+      "artifacts": [
+        {
+          "location": {
+            "uri": "J-C195A-CMUD-07-ST03-DT03-DF18-CF17-01.xml"
+          },
+          "length": 87402,
+          "sourceLanguage": "xml",
+          "hashes": {
+            "sha-256": "1d785e2a25f9bf36ba3afe3d5ea79ad18f7b705690f14e70e52f775dc89b704c"
+          }
+        },
+        {
+          "location": {
+            "uri": "src/com/planet_ink/coffee_mud/CharClasses/StdCharClass.java"
+          },
+          "length": 44916,
+          "sourceLanguage": "java",
+          "hashes": {
+            "sha-256": "df47da63504dbabd7b806d9dddc03984d3e8fd681d794d1ea4c47ea9b8d022fa"
+          }
+        }
+      ],
+      "taxonomies": [
+        {
+          "name": "CWE",
+          "version": "4.6",
+          "informationUri": "https://cwe.mitre.org/data/published/cwe_v4.6.pdf",
+          "downloadUri": "https://cwe.mitre.org/data/xml/cwec_v4.6.xml.zip",
+          "organization": "MITRE",
+          "shortDescription": {
+            "text": "The MITRE Common Weakness Enumeration"
+          },
+          "isComprehensive": false,
+          "taxa": [
+            {
+              "id": "195",
+              "name": "Signed to Unsigned Conversion Error"
+            }
+          ]
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "CWE-195",
+          "message": {
+            "text": "Signed to Unsigned Conversion Error."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/com/planet_ink/coffee_mud/CharClasses/StdCharClass.java",
+                  "index": 1
+                },
+                "region": {
+                  "startLine": 567,
+                  "endLine": 572
+                }
+              }
+            }
+          ],
+          "taxa": [
+            {
+              "toolComponent": {
+                "name": "CWE",
+                "index": 0
+              },
+              "id": "195",
+              "index": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

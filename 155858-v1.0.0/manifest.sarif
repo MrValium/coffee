@@ -1,0 +1,112 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "properties": {
+        "id": 155858,
+        "version": "1.0.0",
+        "type": "source code",
+        "status": "candidate",
+        "submissionDate": "2015-10-06",
+        "language": "java",
+        "author": "IARPA STONESOUP Test and Evaluation team",
+        "description": "This test takes a string, and reads through the string, printing out each character with ASCII value greater than 48. If it encounters a character with ASCII value less than 48, it will fail to increment the loop counter, and loop forever.\nMetadata\n - Base program: Coffee MUD\n - Source Taint: ENVIRONMENT_VARIABLE\n - Data Type: ARRAY\n - Data Flow: BASIC\n - Control Flow: FUNCTION_INVOCATION_OVERLOAD",
+        "state": "bad",
+        "application": "cpe:2.3:a:bo_zimmerman:coffeemud:5.8:*:*:*:*:*:*:*",
+        "dependencies": [
+          "stonesoup-vm-v3.0",
+          "coffeemud-v5.8"
+        ]
+      },
+      "tool": {
+        "driver": {
+          "name": "SARD - SAMATE",
+          "fullName": "Software Assurance Reference Dataset Project",
+          "informationUri": "https://samate.nist.gov/SARD/",
+          "version": "5.0.0",
+          "organization": "NIST",
+          "supportedTaxonomies": [
+            {
+              "name": "CWE",
+              "index": 0
+            }
+          ]
+        }
+      },
+      "artifacts": [
+        {
+          "location": {
+            "uri": "J-C835A-CMUD-06-ST01-DT01-DF11-CF26-01.xml"
+          },
+          "length": 80094,
+          "sourceLanguage": "xml",
+          "hashes": {
+            "sha-256": "a5b957a4b7af7a10acc0adfaa1f77f01dd272e05f7f2263201c48676a763a9fe"
+          }
+        },
+        {
+          "location": {
+            "uri": "src/com/planet_ink/coffee_mud/Common/DefaultSession.java"
+          },
+          "length": 78613,
+          "sourceLanguage": "java",
+          "hashes": {
+            "sha-256": "a3dc54031dd42108fd6b2b67a80608366cbf705192b4d14b26fe8d7b7bd9483d"
+          }
+        }
+      ],
+      "taxonomies": [
+        {
+          "name": "CWE",
+          "version": "4.6",
+          "informationUri": "https://cwe.mitre.org/data/published/cwe_v4.6.pdf",
+          "downloadUri": "https://cwe.mitre.org/data/xml/cwec_v4.6.xml.zip",
+          "organization": "MITRE",
+          "shortDescription": {
+            "text": "The MITRE Common Weakness Enumeration"
+          },
+          "isComprehensive": false,
+          "taxa": [
+            {
+              "id": "835",
+              "name": "Loop with Unreachable Exit Condition ('Infinite Loop')"
+            }
+          ]
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "CWE-835",
+          "message": {
+            "text": "Loop with Unreachable Exit Condition ('Infinite Loop')."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/com/planet_ink/coffee_mud/Common/DefaultSession.java",
+                  "index": 1
+                },
+                "region": {
+                  "startLine": 2633,
+                  "endLine": 2639
+                }
+              }
+            }
+          ],
+          "taxa": [
+            {
+              "toolComponent": {
+                "name": "CWE",
+                "index": 0
+              },
+              "id": "835",
+              "index": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

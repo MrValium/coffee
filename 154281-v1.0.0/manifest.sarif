@@ -1,0 +1,112 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "properties": {
+        "id": 154281,
+        "version": "1.0.0",
+        "type": "source code",
+        "status": "candidate",
+        "submissionDate": "2015-10-06",
+        "language": "java",
+        "author": "IARPA STONESOUP Test and Evaluation team",
+        "description": "This test gets the index of the character . in the input string.\n It then uses that index to get a substring beginning with .\n If . does not occur in the string, the index will be -1, and then\n the substring operation will fail with an IndexOutOfBounds exception.\nMetadata\n - Base program: Coffee MUD\n - Source Taint: ENVIRONMENT_VARIABLE\n - Data Type: SIMPLE\n - Data Flow: JAVA_GENERICS\n - Control Flow: INTERRUPT",
+        "state": "bad",
+        "application": "cpe:2.3:a:bo_zimmerman:coffeemud:5.8:*:*:*:*:*:*:*",
+        "dependencies": [
+          "stonesoup-vm-v3.0",
+          "coffeemud-v5.8"
+        ]
+      },
+      "tool": {
+        "driver": {
+          "name": "SARD - SAMATE",
+          "fullName": "Software Assurance Reference Dataset Project",
+          "informationUri": "https://samate.nist.gov/SARD/",
+          "version": "5.0.0",
+          "organization": "NIST",
+          "supportedTaxonomies": [
+            {
+              "name": "CWE",
+              "index": 0
+            }
+          ]
+        }
+      },
+      "artifacts": [
+        {
+          "location": {
+            "uri": "J-C253A-CMUD-05-ST01-DT02-DF18-CF16-01.xml"
+          },
+          "length": 80170,
+          "sourceLanguage": "xml",
+          "hashes": {
+            "sha-256": "e006ac03d053c5261c97b98cf677bea5a2cb40a476395f49793cd555c7f58abe"
+          }
+        },
+        {
+          "location": {
+            "uri": "src/com/planet_ink/coffee_mud/MOBS/StdMOB.java"
+          },
+          "length": 130938,
+          "sourceLanguage": "java",
+          "hashes": {
+            "sha-256": "b47d8fbbaec8d4853034c07d56ed4f16164e1dbfbb32c9ff7eda241f97e6312f"
+          }
+        }
+      ],
+      "taxonomies": [
+        {
+          "name": "CWE",
+          "version": "4.6",
+          "informationUri": "https://cwe.mitre.org/data/published/cwe_v4.6.pdf",
+          "downloadUri": "https://cwe.mitre.org/data/xml/cwec_v4.6.xml.zip",
+          "organization": "MITRE",
+          "shortDescription": {
+            "text": "The MITRE Common Weakness Enumeration"
+          },
+          "isComprehensive": false,
+          "taxa": [
+            {
+              "id": "253",
+              "name": "Incorrect Check of Function Return Value"
+            }
+          ]
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "CWE-253",
+          "message": {
+            "text": "Incorrect Check of Function Return Value."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/com/planet_ink/coffee_mud/MOBS/StdMOB.java",
+                  "index": 1
+                },
+                "region": {
+                  "startLine": 3425,
+                  "endLine": 3429
+                }
+              }
+            }
+          ],
+          "taxa": [
+            {
+              "toolComponent": {
+                "name": "CWE",
+                "index": 0
+              },
+              "id": "253",
+              "index": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

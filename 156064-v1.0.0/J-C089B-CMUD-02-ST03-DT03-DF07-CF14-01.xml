@@ -1,0 +1,1184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project base_program="J-CMUD" language="JAVA" name="J-C089B-CMUD-02-ST03-DT03-DF07-CF14-01" targeted_architecture="ANY" targeted_os="LINUX" test_case_type="ALL" xmlns="urn:stonesoup:project">
+    <description>This test creates a connection to the PGSQL database,
+ and creates a query string based on data in an environment
+ variable. This data is not checked for special elements, however, and
+ it is possible to construct a query string that performs unexpected
+ data retrievals or modifications.
+</description>
+    <additional_information>
+        <keyvalue key="kill_command">TRUE</keyvalue>
+        <keyvalue key="JAVA_MAIN">com.planet_ink.coffee_mud.application.MUD</keyvalue>
+        <keyvalue key="JAVA_CLASSPATH">$SS_TC_ROOT/$SS_TC_INSTALL:$SS_TC_ROOT/$SS_TC_INSTALL/lib/*:$SS_TC_DEPS/java/coffeemud/js.jar:$SS_TC_DEPS/java/coffeemud/jzlib.jar:$SS_TC_DEPS/java/stonesoup/database/postgres/*:$SS_TC_DEPS/java/stonesoup/socket/*:$SS_TC_DEPS/java/stonesoup/lttng/lttng-stonesoup-0.1.jar</keyvalue>
+        <keyvalue key="algorithmic_variant_name">UNSPECIFIED</keyvalue>
+        <keyvalue key="root_cause">UNSPECIFIED</keyvalue>
+    </additional_information>
+    <structure install="install" iodata="testData" scoredata="testOutput" scripts="scripts" source="src"/>
+    <run_command>java -classpath &quot;$SS_JAVA_CLASSPATH&quot; -Xmx170m com.planet_ink.coffee_mud.application.MUD &quot;SS_Mud_Server&quot;</run_command>
+    <weakness generation_method="FAULT_INJECTED">
+        <variant cwe="CWE-89" name="CWE-89-B">
+            <crossover_point file_name="/tmp/tmpMpIK7F_ss_testcase/src/com/planet_ink/coffee_mud/Libraries/CharCreation.java" line_number="0">
+                <method name="reinvestigationChaparral"/>
+            </crossover_point>
+            <trigger_point file_name="/tmp/tmpMpIK7F_ss_testcase/src/com/planet_ink/coffee_mud/Libraries/CharCreation.java" line_number="0">
+                <method name="reinvestigationChaparral"/>
+            </trigger_point>
+        </variant>
+        <features>
+            <taint_source file_name="/tmp/tmpMpIK7F_ss_testcase/src/com/planet_ink/coffee_mud/Libraries/CharCreation.java" line_number="0" type="SOCKET">
+                <method name="newCharNameCheck"/>
+            </taint_source>
+            <data_type file_name="/tmp/tmpMpIK7F_ss_testcase/src/com/planet_ink/coffee_mud/Libraries/CharCreation.java" line_number="0" type="VOID_POINTER">
+                <method name="newCharNameCheck"/>
+            </data_type>
+            <data_flow file_name="/tmp/tmpMpIK7F_ss_testcase/src/com/planet_ink/coffee_mud/Libraries/CharCreation.java" line_number="0" type="INDEX_ALIAS_1">
+                <method name="newCharNameCheck"/>
+            </data_flow>
+            <control_flow file_name="/tmp/tmpMpIK7F_ss_testcase/src/com/planet_ink/coffee_mud/Libraries/CharCreation.java" line_number="0" type="INTERPROCEDURAL_10">
+                <method name="newCharNameCheck"/>
+            </control_flow>
+        </features>
+    </weakness>
+    <build_commands>
+        <command>env ANT_HOME=&quot;$SS_TC_DEPS/ant&quot; ant $SS_ANT_OPTS -Dstonesoup.database.postgres.required=yes -Dstonesoup.hibernate.postgres.required=no -Dstonesoup.hibernate.mysql.required=no -Dstonesoup.database.mysql.required=no -Dstonesoup.socket.required=yes -lib $SS_TC_DEPS/java/stonesoup/lttng/lttng-stonesoup-0.1.jar -Dlib.dir=&quot;$SS_TC_DEPS/java/coffeemud&quot; -Dstonesoup.socket.lib.dir=&quot;$SS_TC_DEPS/java/stonesoup/socket&quot; -Dstonesoup.hibernate.mysql.lib.dir=&quot;$SS_TC_DEPS/java/stonesoup/hibernate/mysql&quot; -Dstonesoup.hibernate.postgres.lib.dir=&quot;$SS_TC_DEPS/java/stonesoup/hibernate/postgres&quot; -Dstonesoup.database.mysql.lib.dir=&quot;$SS_TC_DEPS/java/stonesoup/database/mysql&quot; -Dstonesoup.database.postgres.lib.dir=&quot;$SS_TC_DEPS/java/stonesoup/database/postgres&quot;  -Dstonesoup.lttng.lib.dir=&quot;$SS_TC_DEPS/java/stonesoup/lttng&quot; -Dstonesoup.lttng.dummy.lib.dir=&quot;$SS_TC_DEPS/java/stonesoup/lttng-dummy&quot; -Ddist.dir=&quot;$SS_TC_ROOT/$SS_TC_INSTALL&quot; -Dbuild.dir=$SS_TC_ROOT/$SS_TC_INSTALL  compile</command>
+    </build_commands>
+    <iopairs>
+        <iopair name="J-C089B-CMUD-02-ST03-DT03-DF07-CF14-01-GOOD-01" reset_scheme="NONE" timeout="300" type="GOOD">
+            <description>register a character, become an archon (essentially a superuser), destroy character
+Environment variable defining test value.
+</description>
+            <technical_impact>NONE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf 'env SS_DBPGDATABASE;\n' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <database database_name="northwindlower_jtovdgumwvjprrhk" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_FILE_CONTENTS">/opt/stonesoup/workspace/scripts/northwind_create_northwindlower_jtovdgumwvjprrhk.sql</database>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_DBPGDATABASE" type="USE_TEXT">northwindlower_jtovdgumwvjprrhk</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">sleep 2 &amp;&amp; printf &quot;Sleeping to allow DB to be created.&quot;</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555</script>
+                        </process>
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_01_SCRIPT" type="USE_TEXT">sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-01/good_01.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_4DFDQeSwFP" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;USA&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <database database_name="northwindlower_jtovdgumwvjprrhk" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_TEXT">DROP DATABASE IF EXISTS $SS_DBPGDATABASE;</database>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_w3Jd0Jgy0K" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="GOOD-01-Default">
+                <formula name="GOOD-01-Default">GOOD-01-01 AND GOOD-01-02 AND GOOD-01-03 AND NOT TIMEOUT AND NOT CONTROLLED_EXIT</formula>
+            </scoring_formula>
+            <output_checks>
+                <compare_check check_type="CONTAINS" name="GOOD-01-01">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-01/good-01-01.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-01-02">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-01/good-01-02.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-01-03">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-01/good-01-03.txt</expected>
+                </compare_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="TIMEOUT" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="CONTROLLED_EXIT" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C089B-CMUD-02-ST03-DT03-DF07-CF14-01-GOOD-02" reset_scheme="NONE" timeout="300" type="GOOD">
+            <description>register character, become archon, check inventory, destroy character
+Environment variable defining test value.
+</description>
+            <technical_impact>NONE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf 'env SS_DBPGDATABASE;\n' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <database database_name="northwindlower_ociakyqdbfjowjzm" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_FILE_CONTENTS">/opt/stonesoup/workspace/scripts/northwind_create_northwindlower_ociakyqdbfjowjzm.sql</database>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_DBPGDATABASE" type="USE_TEXT">northwindlower_ociakyqdbfjowjzm</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">sleep 2 &amp;&amp; printf &quot;Sleeping to allow DB to be created.&quot;</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_02_SCRIPT" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-02/good_02.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_EySpmuX9mS" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;Germany&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <database database_name="northwindlower_ociakyqdbfjowjzm" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_TEXT">DROP DATABASE IF EXISTS $SS_DBPGDATABASE;</database>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_rPHD7MdZej" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="GOOD-02-Default">
+                <formula name="GOOD-02-Default">GOOD-02-01 AND GOOD-02-02 AND GOOD-02-03 AND GOOD-02-04 AND NOT TIMEOUT AND NOT CONTROLLED_EXIT</formula>
+            </scoring_formula>
+            <output_checks>
+                <compare_check check_type="CONTAINS" name="GOOD-02-01">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-02/good-02-01.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-02-02">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-02/good-02-02.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-02-03">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-02/good-02-03.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-02-04">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-02/good-02-04.txt</expected>
+                </compare_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="TIMEOUT" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="CONTROLLED_EXIT" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C089B-CMUD-02-ST03-DT03-DF07-CF14-01-GOOD-03" reset_scheme="NONE" timeout="300" type="GOOD">
+            <description>register character, become archon, auto-generate a dungeon, move room, destroy character
+Environment variable defining test value.
+</description>
+            <technical_impact>NONE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf 'env SS_DBPGDATABASE;\n' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <database database_name="northwindlower_icdzifxcrpzotpoz" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_FILE_CONTENTS">/opt/stonesoup/workspace/scripts/northwind_create_northwindlower_icdzifxcrpzotpoz.sql</database>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_DBPGDATABASE" type="USE_TEXT">northwindlower_icdzifxcrpzotpoz</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">sleep 2 &amp;&amp; printf &quot;Sleeping to allow DB to be created.&quot;</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_03_SCRIPT" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-03/good_03.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_0yswiNln7G" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;Finland&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <database database_name="northwindlower_icdzifxcrpzotpoz" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_TEXT">DROP DATABASE IF EXISTS $SS_DBPGDATABASE;</database>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_VkWEB11eov" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="GOOD-03-Default">
+                <formula name="GOOD-03-Default">GOOD-03-01 AND GOOD-03-02 AND GOOD-03-03 AND GOOD-03-04 AND NOT TIMEOUT AND NOT CONTROLLED_EXIT</formula>
+            </scoring_formula>
+            <output_checks>
+                <compare_check check_type="CONTAINS" name="GOOD-03-01">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-03/good-03-01.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-03-02">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-03/good-03-02.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-03-03">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-03/good-03-03.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-03-04">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-03/good-03-04.txt</expected>
+                </compare_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="TIMEOUT" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="CONTROLLED_EXIT" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C089B-CMUD-02-ST03-DT03-DF07-CF14-01-GOOD-04" reset_scheme="NONE" timeout="300" type="GOOD">
+            <description>register character, become archon, auto-generate a dungeon, check inventory, hold torch, move room, destroy character
+Environment variable defining test value.
+</description>
+            <technical_impact>NONE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf 'env SS_DBPGDATABASE;\n' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <database database_name="northwindlower_tjomejdyyorhuwjq" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_FILE_CONTENTS">/opt/stonesoup/workspace/scripts/northwind_create_northwindlower_tjomejdyyorhuwjq.sql</database>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_DBPGDATABASE" type="USE_TEXT">northwindlower_tjomejdyyorhuwjq</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">sleep 2 &amp;&amp; printf &quot;Sleeping to allow DB to be created.&quot;</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_04_SCRIPT" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-04/good_04.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_EEyCsdo7OA" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;USA&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <database database_name="northwindlower_tjomejdyyorhuwjq" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_TEXT">DROP DATABASE IF EXISTS $SS_DBPGDATABASE;</database>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_xvcRKl1myX" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="GOOD-04-Default">
+                <formula name="GOOD-04-Default">GOOD-04-01 AND GOOD-04-02 AND GOOD-04-03 AND GOOD-04-05 AND NOT TIMEOUT AND NOT CONTROLLED_EXIT</formula>
+            </scoring_formula>
+            <output_checks>
+                <compare_check check_type="CONTAINS" name="GOOD-04-01">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-04/good-04-01.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-04-02">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-04/good-04-02.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-04-03">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-04/good-04-03.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-04-04">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-04/good-04-04.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-04-05">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-04/good-04-05.txt</expected>
+                </compare_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="TIMEOUT" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="CONTROLLED_EXIT" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C089B-CMUD-02-ST03-DT03-DF07-CF14-01-GOOD-05" reset_scheme="NONE" timeout="300" type="GOOD">
+            <description>register character, become archon, auto-generate a dungeon, search, check inventory, hold torch, move room, destroy character
+Environment variable defining test value.
+</description>
+            <technical_impact>NONE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf 'env SS_DBPGDATABASE;\n' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <database database_name="northwindlower_qgcbbzmgsabglozv" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_FILE_CONTENTS">/opt/stonesoup/workspace/scripts/northwind_create_northwindlower_qgcbbzmgsabglozv.sql</database>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_DBPGDATABASE" type="USE_TEXT">northwindlower_qgcbbzmgsabglozv</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">sleep 2 &amp;&amp; printf &quot;Sleeping to allow DB to be created.&quot;</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_05_SCRIPT" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-05/good_05.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_KZ8so5FbUv" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;Germany&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <database database_name="northwindlower_qgcbbzmgsabglozv" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_TEXT">DROP DATABASE IF EXISTS $SS_DBPGDATABASE;</database>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_3t00p4gZmJ" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="GOOD-05-Default">
+                <formula name="GOOD-05-Default">GOOD-05-01 AND GOOD-05-02 AND GOOD-05-03 AND GOOD-05-04 AND GOOD-05-05 AND NOT TIMEOUT AND NOT CONTROLLED_EXIT</formula>
+            </scoring_formula>
+            <output_checks>
+                <compare_check check_type="CONTAINS" name="GOOD-05-01">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-05/good-05-01.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-05-02">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-05/good-05-02.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-05-03">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-05/good-05-03.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-05-04">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-05/good-05-04.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-05-05">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-05/good-05-05.txt</expected>
+                </compare_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="TIMEOUT" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="CONTROLLED_EXIT" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C089B-CMUD-02-ST03-DT03-DF07-CF14-01-GOOD-06" reset_scheme="NONE" timeout="300" type="GOOD">
+            <description>register character, become archon, export world-state to file, destroy character
+Environment variable defining test value.
+</description>
+            <technical_impact>NONE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf 'env SS_DBPGDATABASE;\n' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <database database_name="northwindlower_wsbbnzsjxrzkrbnj" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_FILE_CONTENTS">/opt/stonesoup/workspace/scripts/northwind_create_northwindlower_wsbbnzsjxrzkrbnj.sql</database>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_DBPGDATABASE" type="USE_TEXT">northwindlower_wsbbnzsjxrzkrbnj</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">sleep 2 &amp;&amp; printf &quot;Sleeping to allow DB to be created.&quot;</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_06_SCRIPT" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-06/good_06.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_S8wcWeF3Lt" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;Finland&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <database database_name="northwindlower_wsbbnzsjxrzkrbnj" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_TEXT">DROP DATABASE IF EXISTS $SS_DBPGDATABASE;</database>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_suVti5sLqe" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="GOOD-06-Default">
+                <formula name="GOOD-06-Default">GOOD-06 AND NOT TIMEOUT AND NOT CONTROLLED_EXIT</formula>
+            </scoring_formula>
+            <output_checks>
+                <compare_check check_type="CONTAINS" name="GOOD-06">
+                    <actual output_type="FILE_CONTENTS">../testData/worldexport.txt</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-06/output.txt</expected>
+                </compare_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="TIMEOUT" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="CONTROLLED_EXIT" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C089B-CMUD-02-ST03-DT03-DF07-CF14-01-GOOD-07" reset_scheme="NONE" timeout="300" type="GOOD">
+            <description>register character, become archon, import area from file, list areas of world, destroy character
+Environment variable defining test value.
+</description>
+            <technical_impact>NONE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf 'env SS_DBPGDATABASE;\n' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <database database_name="northwindlower_unulranycqrankkp" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_FILE_CONTENTS">/opt/stonesoup/workspace/scripts/northwind_create_northwindlower_unulranycqrankkp.sql</database>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_DBPGDATABASE" type="USE_TEXT">northwindlower_unulranycqrankkp</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">sleep 2 &amp;&amp; printf &quot;Sleeping to allow DB to be created.&quot;</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_07_SCRIPT" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-07/good_07.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_x1YAoq0e2M" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;USA&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <database database_name="northwindlower_unulranycqrankkp" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_TEXT">DROP DATABASE IF EXISTS $SS_DBPGDATABASE;</database>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_P66gTnJkEf" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="GOOD-07-Default">
+                <formula name="GOOD-07-Default">(GOOD-07-01 OR GOOD-07-02) AND NOT TIMEOUT AND NOT CONTROLLED_EXIT</formula>
+            </scoring_formula>
+            <output_checks>
+                <compare_check check_type="CONTAINS" name="GOOD-07-01">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-07/output.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-07-02">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-07/output2.txt</expected>
+                </compare_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="TIMEOUT" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="CONTROLLED_EXIT" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C089B-CMUD-02-ST03-DT03-DF07-CF14-01-GOOD-08" reset_scheme="NONE" timeout="300" type="GOOD">
+            <description>register character, become archon, create a news entry, check news, destroy character
+Environment variable defining test value.
+</description>
+            <technical_impact>NONE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf 'env SS_DBPGDATABASE;\n' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <database database_name="northwindlower_iecrgifwtdnohoqo" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_FILE_CONTENTS">/opt/stonesoup/workspace/scripts/northwind_create_northwindlower_iecrgifwtdnohoqo.sql</database>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_DBPGDATABASE" type="USE_TEXT">northwindlower_iecrgifwtdnohoqo</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">sleep 2 &amp;&amp; printf &quot;Sleeping to allow DB to be created.&quot;</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_08_SCRIPT" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-08/good_08.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_yrZ0ICzRzu" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;Germany&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <database database_name="northwindlower_iecrgifwtdnohoqo" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_TEXT">DROP DATABASE IF EXISTS $SS_DBPGDATABASE;</database>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_7XAgz8yKx4" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="GOOD-08-Default">
+                <formula name="GOOD-08-Default">GOOD-08-HEADER AND GOOD-08-SUBJECT AND NOT TIMEOUT AND NOT CONTROLLED_EXIT</formula>
+            </scoring_formula>
+            <output_checks>
+                <compare_check check_type="CONTAINS" name="GOOD-08-HEADER">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-08/header.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-08-SUBJECT">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-08/subject.txt</expected>
+                </compare_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="TIMEOUT" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="CONTROLLED_EXIT" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C089B-CMUD-02-ST03-DT03-DF07-CF14-01-GOOD-09" reset_scheme="NONE" timeout="300" type="GOOD">
+            <description>register character, become archon, create mobs, have them fight, destroy character
+Environment variable defining test value.
+</description>
+            <technical_impact>NONE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf 'env SS_DBPGDATABASE;\n' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <database database_name="northwindlower_apzyihdbjxekzykf" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_FILE_CONTENTS">/opt/stonesoup/workspace/scripts/northwind_create_northwindlower_apzyihdbjxekzykf.sql</database>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_DBPGDATABASE" type="USE_TEXT">northwindlower_apzyihdbjxekzykf</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">sleep 2 &amp;&amp; printf &quot;Sleeping to allow DB to be created.&quot;</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_09_SCRIPT" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-09/good_09.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_Yk7pDYxD8E" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;Finland&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <database database_name="northwindlower_apzyihdbjxekzykf" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_TEXT">DROP DATABASE IF EXISTS $SS_DBPGDATABASE;</database>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_ilKdb5bc9S" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="GOOD-09-Default">
+                <formula name="GOOD-09-Default">GOOD-09 AND NOT TIMEOUT AND NOT CONTROLLED_EXIT</formula>
+            </scoring_formula>
+            <output_checks>
+                <compare_check check_type="CONTAINS" name="GOOD-09">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_TEXT">is DEAD!!!</expected>
+                </compare_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="TIMEOUT" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="CONTROLLED_EXIT" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C089B-CMUD-02-ST03-DT03-DF07-CF14-01-GOOD-10" reset_scheme="NONE" timeout="300" type="GOOD">
+            <description>register character, become archon, generate an average level 5 bard, destroy character
+Environment variable defining test value.
+</description>
+            <technical_impact>NONE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf 'env SS_DBPGDATABASE;\n' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <database database_name="northwindlower_ehlfrrfrgigwdcsr" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_FILE_CONTENTS">/opt/stonesoup/workspace/scripts/northwind_create_northwindlower_ehlfrrfrgigwdcsr.sql</database>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_DBPGDATABASE" type="USE_TEXT">northwindlower_ehlfrrfrgigwdcsr</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">sleep 2 &amp;&amp; printf &quot;Sleeping to allow DB to be created.&quot;</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_10_SCRIPT" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-10/good_10.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_RYXEoGwD2F" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;USA&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <database database_name="northwindlower_ehlfrrfrgigwdcsr" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_TEXT">DROP DATABASE IF EXISTS $SS_DBPGDATABASE;</database>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_J705iWVCCf" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="GOOD-10-Default">
+                <formula name="GOOD-10-Default">GOOD-10 AND NOT TIMEOUT AND NOT CONTROLLED_EXIT</formula>
+            </scoring_formula>
+            <output_checks>
+                <compare_check check_type="CONTAINS" name="GOOD-10">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-10/output.txt</expected>
+                </compare_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="TIMEOUT" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="CONTROLLED_EXIT" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C089B-CMUD-02-ST03-DT03-DF07-CF14-01-BAD-01" reset_scheme="NONE" timeout="300" type="BAD">
+            <description>Environment variable defining test value.
+</description>
+            <technical_impact>EXECUTE_UNAUTHORIZED_CODE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf 'env SS_DBPGDATABASE;\n' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <database database_name="northwindlower_lnuavmhkocacbdnl" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_FILE_CONTENTS">/opt/stonesoup/workspace/scripts/northwind_create_northwindlower_lnuavmhkocacbdnl.sql</database>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_DBPGDATABASE" type="USE_TEXT">northwindlower_lnuavmhkocacbdnl</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">sleep 2 &amp;&amp; printf &quot;Sleeping to allow DB to be created.&quot;</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_07_SCRIPTyR5l90F0ea" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-07/good_07.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_HOcotjDX2wRh996DLujE" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;x' or 'x'='x&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <database database_name="northwindlower_lnuavmhkocacbdnl" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_TEXT">DROP DATABASE IF EXISTS $SS_DBPGDATABASE;</database>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_Ae5YOR4Np7bszFB5VCBP" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="db_sql_formula_Vo0DJeKigG">
+                <formula name="db_sql_formula_Vo0DJeKigG">weakness_started_ZtfpoHIu4EhozKFIpEhn AND ((NOT PERFORMER AND (db_sql_output_OXybfiQgj3 OR db_sql_output_oEAk0Ap2IV) AND NOT timeout_AtDVE7agwh) or (PERFORMER AND NOT ((db_sql_output_OXybfiQgj3 OR db_sql_output_oEAk0Ap2IV) OR timeout_AtDVE7agwh OR controlled_exit_vgsrSluF7d)))</formula>
+                <formula name="no_weakness_started_formula_WUEsq55eWs">(NOT PERFORMER AND (db_sql_output_OXybfiQgj3 OR db_sql_output_oEAk0Ap2IV) AND NOT timeout_AtDVE7agwh) or (PERFORMER AND NOT ((db_sql_output_OXybfiQgj3 OR db_sql_output_oEAk0Ap2IV) OR timeout_AtDVE7agwh OR controlled_exit_vgsrSluF7d))</formula>
+            </scoring_formula>
+            <output_checks>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="timeout_AtDVE7agwh" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="controlled_exit_vgsrSluF7d" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="continued_execution_A7W2uiUSEc" type="USE_TEXT">CONTINUED_EXECUTION</simple_check>
+                <compare_check check_type="CONTAINS" name="db_sql_output_OXybfiQgj3">
+                    <actual encoding="STRING" output_type="FILE_CONTENTS">logfile.txt</actual>
+                    <expected encoding="STRING" type="USE_TEXT">Zbyszek Piestrzeniewicz</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="db_sql_output_oEAk0Ap2IV">
+                    <actual encoding="STRING" output_type="FILE_CONTENTS">logfile.txt</actual>
+                    <expected encoding="STRING" type="USE_TEXT">Rattlesnake Canyon Grocery</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="weakness_started_ZtfpoHIu4EhozKFIpEhn">
+                    <actual encoding="STRING" input_id_ref="lttng_output_Ae5YOR4Np7bszFB5VCBP" output_type="STANDARD_OUT">None</actual>
+                    <expected encoding="STRING" type="USE_TEXT">stonesoup_trace:weakness_start</expected>
+                </compare_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C089B-CMUD-02-ST03-DT03-DF07-CF14-01-BAD-02" reset_scheme="NONE" timeout="300" type="BAD">
+            <description>Environment variable defining test value.
+</description>
+            <technical_impact>EXECUTE_UNAUTHORIZED_CODE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf 'env SS_DBPGDATABASE;\n' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <database database_name="northwindlower_tdkblyjbfhhpjyaz" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_FILE_CONTENTS">/opt/stonesoup/workspace/scripts/northwind_create_northwindlower_tdkblyjbfhhpjyaz.sql</database>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_DBPGDATABASE" type="USE_TEXT">northwindlower_tdkblyjbfhhpjyaz</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">sleep 2 &amp;&amp; printf &quot;Sleeping to allow DB to be created.&quot;</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_05_SCRIPTSVzBYYQrVJ" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-05/good_05.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_g9iDVaGaIGhiKIO1WFUB" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;x'; Select * from orders; -- &quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <database database_name="northwindlower_tdkblyjbfhhpjyaz" database_type="POSTGRESQL" encoding="STRING" server="ss-db-postgres" type="USE_TEXT">DROP DATABASE IF EXISTS $SS_DBPGDATABASE;</database>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_Egcq5nMT8sUA1lj7j65y" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="db_sql_formula_yHTZc3zJkO">
+                <formula name="db_sql_formula_yHTZc3zJkO">weakness_started_iYd0OiLuegqofYb8l5oq AND ((NOT PERFORMER AND (db_sql_output_cutALleRYo OR db_sql_output_1yeKTOszZF) AND NOT timeout_XqZlT9eUlA) or (PERFORMER AND NOT ((db_sql_output_cutALleRYo OR db_sql_output_1yeKTOszZF) OR timeout_XqZlT9eUlA OR controlled_exit_4DIk0bBw0m)))</formula>
+                <formula name="no_weakness_started_formula_pMM7XKl7XU">(NOT PERFORMER AND (db_sql_output_cutALleRYo OR db_sql_output_1yeKTOszZF) AND NOT timeout_XqZlT9eUlA) or (PERFORMER AND NOT ((db_sql_output_cutALleRYo OR db_sql_output_1yeKTOszZF) OR timeout_XqZlT9eUlA OR controlled_exit_4DIk0bBw0m))</formula>
+            </scoring_formula>
+            <output_checks>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="timeout_XqZlT9eUlA" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="controlled_exit_4DIk0bBw0m" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="continued_execution_VLOYTINx9l" type="USE_TEXT">CONTINUED_EXECUTION</simple_check>
+                <compare_check check_type="CONTAINS" name="db_sql_output_cutALleRYo">
+                    <actual encoding="STRING" output_type="FILE_CONTENTS">logfile.txt</actual>
+                    <expected encoding="STRING" type="USE_TEXT">Zbyszek Piestrzeniewicz</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="db_sql_output_1yeKTOszZF">
+                    <actual encoding="STRING" output_type="FILE_CONTENTS">logfile.txt</actual>
+                    <expected encoding="STRING" type="USE_TEXT">Rattlesnake Canyon Grocery</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="weakness_started_iYd0OiLuegqofYb8l5oq">
+                    <actual encoding="STRING" input_id_ref="lttng_output_Egcq5nMT8sUA1lj7j65y" output_type="STANDARD_OUT">None</actual>
+                    <expected encoding="STRING" type="USE_TEXT">stonesoup_trace:weakness_start</expected>
+                </compare_check>
+            </output_checks>
+        </iopair>
+    </iopairs>
+</project>

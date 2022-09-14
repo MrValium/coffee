@@ -1,0 +1,112 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "properties": {
+        "id": 156807,
+        "version": "1.0.0",
+        "type": "source code",
+        "status": "candidate",
+        "submissionDate": "2015-10-06",
+        "language": "java",
+        "author": "IARPA STONESOUP Test and Evaluation team",
+        "description": "Test will take in a value that is a path to a file under\n the current working directory which will then be displayed. The input\n is checked for .. characters, then URI-decoded. This misses\n percent-encoded .. (%2E%2E) characters and allows arbitrary read access.\nMetadata\n - Base program: Coffee MUD\n - Source Taint: SOCKET\n - Data Type: VOID_POINTER\n - Data Flow: ADDRESS_AS_CONSTANT\n - Control Flow: INTERCLASS_1",
+        "state": "bad",
+        "application": "cpe:2.3:a:bo_zimmerman:coffeemud:5.8:*:*:*:*:*:*:*",
+        "dependencies": [
+          "stonesoup-vm-v3.0",
+          "coffeemud-v5.8"
+        ]
+      },
+      "tool": {
+        "driver": {
+          "name": "SARD - SAMATE",
+          "fullName": "Software Assurance Reference Dataset Project",
+          "informationUri": "https://samate.nist.gov/SARD/",
+          "version": "5.0.0",
+          "organization": "NIST",
+          "supportedTaxonomies": [
+            {
+              "name": "CWE",
+              "index": 0
+            }
+          ]
+        }
+      },
+      "artifacts": [
+        {
+          "location": {
+            "uri": "J-C023B-CMUD-07-ST03-DT03-DF05-CF04-01.xml"
+          },
+          "length": 85095,
+          "sourceLanguage": "xml",
+          "hashes": {
+            "sha-256": "9d8b6a5b26cb7fcfed201d417a771276fc753166d743a5b4d7c26d21133184fc"
+          }
+        },
+        {
+          "location": {
+            "uri": "src/com/planet_ink/coffee_mud/CharClasses/StdCharClass.java"
+          },
+          "length": 45237,
+          "sourceLanguage": "java",
+          "hashes": {
+            "sha-256": "763d98a99ef9218b2ec96e6603dfc03bb0997b0f1b789db44f6bd39c8d44736e"
+          }
+        }
+      ],
+      "taxonomies": [
+        {
+          "name": "CWE",
+          "version": "4.6",
+          "informationUri": "https://cwe.mitre.org/data/published/cwe_v4.6.pdf",
+          "downloadUri": "https://cwe.mitre.org/data/xml/cwec_v4.6.xml.zip",
+          "organization": "MITRE",
+          "shortDescription": {
+            "text": "The MITRE Common Weakness Enumeration"
+          },
+          "isComprehensive": false,
+          "taxa": [
+            {
+              "id": "23",
+              "name": "Relative Path Traversal"
+            }
+          ]
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "CWE-23",
+          "message": {
+            "text": "Relative Path Traversal."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/com/planet_ink/coffee_mud/CharClasses/StdCharClass.java",
+                  "index": 1
+                },
+                "region": {
+                  "startLine": 1195,
+                  "endLine": 1197
+                }
+              }
+            }
+          ],
+          "taxa": [
+            {
+              "toolComponent": {
+                "name": "CWE",
+                "index": 0
+              },
+              "id": "23",
+              "index": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

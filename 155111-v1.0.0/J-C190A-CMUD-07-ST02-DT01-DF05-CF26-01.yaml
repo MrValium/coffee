@@ -1,0 +1,104 @@
+code_complexity_features:
+- feature: FILE_CONTENTS
+  feature_group: source_taint
+  file_name: /tmp/tmp59K7ln_ss_testcase/src/com/planet_ink/coffee_mud/CharClasses/StdCharClass.java
+  function_name: getMaxStatDesc
+  line_number: '0'
+- feature: array
+  feature_group: data_type
+  file_name: /tmp/tmp59K7ln_ss_testcase/src/com/planet_ink/coffee_mud/CharClasses/StdCharClass.java
+  function_name: getMaxStatDesc
+  line_number: '0'
+- feature: address_as_constant
+  feature_group: data_flow
+  file_name: /tmp/tmp59K7ln_ss_testcase/src/com/planet_ink/coffee_mud/CharClasses/StdCharClass.java
+  function_name: getMaxStatDesc
+  line_number: '0'
+- feature: function_invocation_overload
+  feature_group: control_flow
+  file_name: /tmp/tmp59K7ln_ss_testcase/src/com/planet_ink/coffee_mud/CharClasses/StdCharClass.java
+  function_name: getMaxStatDesc
+  line_number: '0'
+description: "This test takes in a value from a taint source,\n and creates a string\
+  \ array based on the value.\n Math is performed on the value such that, if the value\
+  \ is\n greater than 500, the resultant value 'wraps around', and becomes\n negative.\
+  \  This results in an exception being thrown, due to the\n invalid array size.\n"
+io_pair:
+  benigns:
+  - inputs:
+    - name: ASPREAD_GUSTABLE
+      ordinal: '1'
+      source: env_var_input
+      stage: pre_process
+      value: $SS_TC_ROOT/testData/sedgelike_puberulent.bin
+      value_encoding: none
+      value_type: USE_TEXT_DIRECTLY
+    - id: source
+      name: $SS_TC_ROOT/testData/sedgelike_puberulent.bin
+      ordinal: '2'
+      source: file_content_input
+      stage: pre_process
+      value: '200'
+      value_encoding: none
+      value_type: USE_TEXT_DIRECTLY
+  - inputs:
+    - name: ASPREAD_GUSTABLE
+      ordinal: '1'
+      source: env_var_input
+      stage: pre_process
+      value: $SS_TC_ROOT/testData/sedgelike_puberulent.bin
+      value_encoding: none
+      value_type: USE_TEXT_DIRECTLY
+    - id: source
+      name: $SS_TC_ROOT/testData/sedgelike_puberulent.bin
+      ordinal: '2'
+      source: file_content_input
+      stage: pre_process
+      value: '400'
+      value_encoding: none
+      value_type: USE_TEXT_DIRECTLY
+  description: 'Environment variable defining test value.
+
+    '
+  exploits:
+  - inputs:
+    - name: ASPREAD_GUSTABLE
+      ordinal: '1'
+      source: env_var_input
+      stage: pre_process
+      value: $SS_TC_ROOT/testData/sedgelike_puberulent.bin
+      value_encoding: none
+      value_type: USE_TEXT_DIRECTLY
+    - id: source
+      name: $SS_TC_ROOT/testData/sedgelike_puberulent.bin
+      ordinal: '2'
+      source: file_content_input
+      stage: pre_process
+      value: '500'
+      value_encoding: none
+      value_type: USE_TEXT_DIRECTLY
+  - inputs:
+    - name: ASPREAD_GUSTABLE
+      ordinal: '1'
+      source: env_var_input
+      stage: pre_process
+      value: $SS_TC_ROOT/testData/sedgelike_puberulent.bin
+      value_encoding: none
+      value_type: USE_TEXT_DIRECTLY
+    - id: source
+      name: $SS_TC_ROOT/testData/sedgelike_puberulent.bin
+      ordinal: '2'
+      source: file_content_input
+      stage: pre_process
+      value: '600'
+      value_encoding: none
+      value_type: USE_TEXT_DIRECTLY
+weakness_points:
+- entry_point_type: CROSSOVER_POINT
+  file_name: /tmp/tmp59K7ln_ss_testcase/src/com/planet_ink/coffee_mud/CharClasses/StdCharClass.java
+  function_name: steelingUnclad
+  line_number: '0'
+- entry_point_type: TRIGGER_POINT
+  file_name: /tmp/tmp59K7ln_ss_testcase/src/com/planet_ink/coffee_mud/CharClasses/StdCharClass.java
+  function_name: steelingUnclad
+  line_number: '0'

@@ -1,0 +1,112 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "properties": {
+        "id": 154785,
+        "version": "1.0.0",
+        "type": "source code",
+        "status": "candidate",
+        "submissionDate": "2015-10-06",
+        "language": "java",
+        "author": "IARPA STONESOUP Test and Evaluation team",
+        "description": "Algorithmic variant: basic\nRoot cause: none\n This test takes a string. It separates the string into a number to use for an array size to sort and a second string to share between threads. It then creates two threads and runs them both. The first thread calculates an increment amount that is used in the second thread. If the string contains a number or lower decimal value ascii character it will cause the increment amount to become negative which won't be fixed before the second thread uses it causing a StringIndexOutOfBoundsException.\nMetadata\n - Base program: Coffee MUD\n - Source Taint: FILE_CONTENTS\n - Data Type: SIMPLE\n - Data Flow: VAR_ARG_LIST\n - Control Flow: INFINITE_LOOP",
+        "state": "bad",
+        "application": "cpe:2.3:a:bo_zimmerman:coffeemud:5.8:*:*:*:*:*:*:*",
+        "dependencies": [
+          "stonesoup-vm-v3.0",
+          "coffeemud-v5.8"
+        ]
+      },
+      "tool": {
+        "driver": {
+          "name": "SARD - SAMATE",
+          "fullName": "Software Assurance Reference Dataset Project",
+          "informationUri": "https://samate.nist.gov/SARD/",
+          "version": "5.0.0",
+          "organization": "NIST",
+          "supportedTaxonomies": [
+            {
+              "name": "CWE",
+              "index": 0
+            }
+          ]
+        }
+      },
+      "artifacts": [
+        {
+          "location": {
+            "uri": "J-C820A-CMUD-02-ST02-DT02-DF12-CF03-01.xml"
+          },
+          "length": 96537,
+          "sourceLanguage": "xml",
+          "hashes": {
+            "sha-256": "1d1014f0c8af040b8801c53db2f4f0c56fc4991ed33e2e125c4eabbfc0df5e56"
+          }
+        },
+        {
+          "location": {
+            "uri": "src/com/planet_ink/coffee_mud/Libraries/CharCreation.java"
+          },
+          "length": 130194,
+          "sourceLanguage": "java",
+          "hashes": {
+            "sha-256": "12afee7390f611d95fd6ed61d36a8905e91ad5f152c79be59840603308e7bf0f"
+          }
+        }
+      ],
+      "taxonomies": [
+        {
+          "name": "CWE",
+          "version": "4.6",
+          "informationUri": "https://cwe.mitre.org/data/published/cwe_v4.6.pdf",
+          "downloadUri": "https://cwe.mitre.org/data/xml/cwec_v4.6.xml.zip",
+          "organization": "MITRE",
+          "shortDescription": {
+            "text": "The MITRE Common Weakness Enumeration"
+          },
+          "isComprehensive": false,
+          "taxa": [
+            {
+              "id": "820",
+              "name": "Missing Synchronization"
+            }
+          ]
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "CWE-820",
+          "message": {
+            "text": "Missing Synchronization."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/com/planet_ink/coffee_mud/Libraries/CharCreation.java",
+                  "index": 1
+                },
+                "region": {
+                  "startLine": 3519,
+                  "endLine": 3523
+                }
+              }
+            }
+          ],
+          "taxa": [
+            {
+              "toolComponent": {
+                "name": "CWE",
+                "index": 0
+              },
+              "id": "820",
+              "index": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

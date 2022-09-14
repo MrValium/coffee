@@ -1,0 +1,112 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "properties": {
+        "id": 155227,
+        "version": "1.0.0",
+        "type": "source code",
+        "status": "candidate",
+        "submissionDate": "2015-10-06",
+        "language": "java",
+        "author": "IARPA STONESOUP Test and Evaluation team",
+        "description": "This test takes in a value from a taint source,\n and creates a string array based on the value.\n Math is performed on the value such that, if the value is\n greater than 500, the resultant value 'wraps around', and becomes\n negative. This results in an exception being thrown, due to the\n invalid array size.\nMetadata\n - Base program: Coffee MUD\n - Source Taint: SOCKET\n - Data Type: ARRAY\n - Data Flow: ADDRESS_AS_CONSTANT\n - Control Flow: INTERCLASS_50",
+        "state": "bad",
+        "application": "cpe:2.3:a:bo_zimmerman:coffeemud:5.8:*:*:*:*:*:*:*",
+        "dependencies": [
+          "stonesoup-vm-v3.0",
+          "coffeemud-v5.8"
+        ]
+      },
+      "tool": {
+        "driver": {
+          "name": "SARD - SAMATE",
+          "fullName": "Software Assurance Reference Dataset Project",
+          "informationUri": "https://samate.nist.gov/SARD/",
+          "version": "5.0.0",
+          "organization": "NIST",
+          "supportedTaxonomies": [
+            {
+              "name": "CWE",
+              "index": 0
+            }
+          ]
+        }
+      },
+      "artifacts": [
+        {
+          "location": {
+            "uri": "J-C190A-CMUD-10-ST03-DT01-DF05-CF07-01.xml"
+          },
+          "length": 84620,
+          "sourceLanguage": "xml",
+          "hashes": {
+            "sha-256": "c4224c97b1e2f706eb6c1b61c0d96744f19d7a4140b931c6aa44d56fa7eb1e48"
+          }
+        },
+        {
+          "location": {
+            "uri": "src/com/planet_ink/coffee_mud/Common/DefaultMessage.java"
+          },
+          "length": 36130,
+          "sourceLanguage": "java",
+          "hashes": {
+            "sha-256": "0f7661193c491835a33a935114a21ae367cf15b1851ed347a58ec7d830b7f0a8"
+          }
+        }
+      ],
+      "taxonomies": [
+        {
+          "name": "CWE",
+          "version": "4.6",
+          "informationUri": "https://cwe.mitre.org/data/published/cwe_v4.6.pdf",
+          "downloadUri": "https://cwe.mitre.org/data/xml/cwec_v4.6.xml.zip",
+          "organization": "MITRE",
+          "shortDescription": {
+            "text": "The MITRE Common Weakness Enumeration"
+          },
+          "isComprehensive": false,
+          "taxa": [
+            {
+              "id": "190",
+              "name": "Integer Overflow or Wraparound"
+            }
+          ]
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "CWE-190",
+          "message": {
+            "text": "Integer Overflow or Wraparound."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/com/planet_ink/coffee_mud/Common/DefaultMessage.java",
+                  "index": 1
+                },
+                "region": {
+                  "startLine": 919,
+                  "endLine": 923
+                }
+              }
+            }
+          ],
+          "taxa": [
+            {
+              "toolComponent": {
+                "name": "CWE",
+                "index": 0
+              },
+              "id": "190",
+              "index": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

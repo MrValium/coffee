@@ -1,0 +1,84 @@
+code_complexity_features:
+- feature: ENVIRONMENT_VARIABLE
+  feature_group: source_taint
+  file_name: /tmp/tmp2wxFPM_ss_testcase/src/com/planet_ink/coffee_mud/Common/interfaces/Session.java
+  function_name: TickingCallback
+  line_number: '0'
+- feature: array
+  feature_group: data_type
+  file_name: /tmp/tmp2wxFPM_ss_testcase/src/com/planet_ink/coffee_mud/Common/interfaces/Session.java
+  function_name: TickingCallback
+  line_number: '0'
+- feature: index_alias_1
+  feature_group: data_flow
+  file_name: /tmp/tmp2wxFPM_ss_testcase/src/com/planet_ink/coffee_mud/Common/interfaces/Session.java
+  function_name: TickingCallback
+  line_number: '0'
+- feature: recursive
+  feature_group: control_flow
+  file_name: /tmp/tmp2wxFPM_ss_testcase/src/com/planet_ink/coffee_mud/Common/interfaces/Session.java
+  function_name: TickingCallback
+  line_number: '0'
+description: "This test case takes a value and attempts to convert it to\n upper case.\
+  \  If the value contains anything other than a-zA-Z,\n then an exception is thrown,\
+  \ but not caught.\n"
+io_pair:
+  benigns:
+  - inputs:
+    - id: source
+      name: POGONOLOGIST_CACOPHONY
+      ordinal: '1'
+      source: env_var_input
+      stage: pre_process
+      value: SomeValue
+      value_encoding: none
+      value_type: USE_TEXT_DIRECTLY
+  - inputs:
+    - id: source
+      name: POGONOLOGIST_CACOPHONY
+      ordinal: '1'
+      source: env_var_input
+      stage: pre_process
+      value: ALREADYUPPERCASE
+      value_encoding: none
+      value_type: USE_TEXT_DIRECTLY
+  - inputs:
+    - id: source
+      name: POGONOLOGIST_CACOPHONY
+      ordinal: '1'
+      source: env_var_input
+      stage: pre_process
+      value: alllowercase
+      value_encoding: none
+      value_type: USE_TEXT_DIRECTLY
+  description: 'Environment variable
+
+    '
+  exploits:
+  - inputs:
+    - id: source
+      name: POGONOLOGIST_CACOPHONY
+      ordinal: '1'
+      source: env_var_input
+      stage: pre_process
+      value: c0ntainsnumb3rs
+      value_encoding: none
+      value_type: USE_TEXT_DIRECTLY
+  - inputs:
+    - id: source
+      name: POGONOLOGIST_CACOPHONY
+      ordinal: '1'
+      source: env_var_input
+      stage: pre_process
+      value: containspunctuation!
+      value_encoding: none
+      value_type: USE_TEXT_DIRECTLY
+weakness_points:
+- entry_point_type: TRIGGER_POINT
+  file_name: /tmp/tmp2wxFPM_ss_testcase/src/com/planet_ink/coffee_mud/Common/interfaces/Session.java
+  function_name: disjunctivelyBeguess
+  line_number: '0'
+- entry_point_type: CROSSOVER_POINT
+  file_name: /tmp/tmp2wxFPM_ss_testcase/src/com/planet_ink/coffee_mud/Common/interfaces/Session.java
+  function_name: disjunctivelyBeguess
+  line_number: '0'

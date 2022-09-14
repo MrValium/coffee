@@ -1,0 +1,1049 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project base_program="J-CMUD" language="JAVA" name="J-C774B-CMUD-10-ST03-DT03-DF18-CF02-01" targeted_architecture="ANY" targeted_os="LINUX" test_case_type="ALL" xmlns="urn:stonesoup:project">
+    <description>This test takes in integer n.  The program attempts to open n files. If n is large enough the number of file handles will be exhausted, these files handlers are never closed, and stored in a global arraylist, causing the entire program to fail to open any files from that point on.
+</description>
+    <additional_information>
+        <keyvalue key="kill_command">TRUE</keyvalue>
+        <keyvalue key="JAVA_MAIN">com.planet_ink.coffee_mud.application.MUD</keyvalue>
+        <keyvalue key="JAVA_CLASSPATH">$SS_TC_ROOT/$SS_TC_INSTALL:$SS_TC_ROOT/$SS_TC_INSTALL/lib/*:$SS_TC_DEPS/java/coffeemud/js.jar:$SS_TC_DEPS/java/coffeemud/jzlib.jar:$SS_TC_DEPS/java/stonesoup/socket/*:$SS_TC_DEPS/java/stonesoup/lttng/lttng-stonesoup-0.1.jar</keyvalue>
+        <keyvalue key="algorithmic_variant_name">UNSPECIFIED</keyvalue>
+        <keyvalue key="root_cause">UNSPECIFIED</keyvalue>
+    </additional_information>
+    <structure install="install" iodata="testData" scoredata="testOutput" scripts="scripts" source="src"/>
+    <run_command>java -classpath &quot;$SS_JAVA_CLASSPATH&quot; -Xmx170m com.planet_ink.coffee_mud.application.MUD &quot;SS_Mud_Server&quot;</run_command>
+    <weakness generation_method="FAULT_INJECTED">
+        <variant cwe="CWE-774" name="CWE-774-B">
+            <crossover_point file_name="/tmp/tmpeUEEN7_ss_testcase/src/com/planet_ink/coffee_mud/Common/DefaultMessage.java" line_number="0">
+                <method name="indivertiblyRecitalist"/>
+            </crossover_point>
+            <trigger_point file_name="/tmp/tmpeUEEN7_ss_testcase/src/com/planet_ink/coffee_mud/Common/DefaultMessage.java" line_number="0">
+                <method name="indivertiblyRecitalist"/>
+            </trigger_point>
+        </variant>
+        <features>
+            <taint_source file_name="/tmp/tmpeUEEN7_ss_testcase/src/com/planet_ink/coffee_mud/Common/DefaultMessage.java" line_number="0" type="SOCKET">
+                <method name="modify"/>
+            </taint_source>
+            <data_type file_name="/tmp/tmpeUEEN7_ss_testcase/src/com/planet_ink/coffee_mud/Common/DefaultMessage.java" line_number="0" type="VOID_POINTER">
+                <method name="modify"/>
+            </data_type>
+            <data_flow file_name="/tmp/tmpeUEEN7_ss_testcase/src/com/planet_ink/coffee_mud/Common/DefaultMessage.java" line_number="0" type="JAVA_GENERICS">
+                <method name="modify"/>
+            </data_flow>
+            <control_flow file_name="/tmp/tmpeUEEN7_ss_testcase/src/com/planet_ink/coffee_mud/Common/DefaultMessage.java" line_number="0" type="INDIRECTLY_RECURSIVE">
+                <method name="modify"/>
+            </control_flow>
+        </features>
+    </weakness>
+    <build_commands>
+        <command>env ANT_HOME=&quot;$SS_TC_DEPS/ant&quot; ant $SS_ANT_OPTS -Dstonesoup.database.postgres.required=no -Dstonesoup.hibernate.postgres.required=no -Dstonesoup.hibernate.mysql.required=no -Dstonesoup.database.mysql.required=no -Dstonesoup.socket.required=yes -lib $SS_TC_DEPS/java/stonesoup/lttng/lttng-stonesoup-0.1.jar -Dlib.dir=&quot;$SS_TC_DEPS/java/coffeemud&quot; -Dstonesoup.socket.lib.dir=&quot;$SS_TC_DEPS/java/stonesoup/socket&quot; -Dstonesoup.hibernate.mysql.lib.dir=&quot;$SS_TC_DEPS/java/stonesoup/hibernate/mysql&quot; -Dstonesoup.hibernate.postgres.lib.dir=&quot;$SS_TC_DEPS/java/stonesoup/hibernate/postgres&quot; -Dstonesoup.database.mysql.lib.dir=&quot;$SS_TC_DEPS/java/stonesoup/database/mysql&quot; -Dstonesoup.database.postgres.lib.dir=&quot;$SS_TC_DEPS/java/stonesoup/database/postgres&quot;  -Dstonesoup.lttng.lib.dir=&quot;$SS_TC_DEPS/java/stonesoup/lttng&quot; -Dstonesoup.lttng.dummy.lib.dir=&quot;$SS_TC_DEPS/java/stonesoup/lttng-dummy&quot; -Ddist.dir=&quot;$SS_TC_ROOT/$SS_TC_INSTALL&quot; -Dbuild.dir=$SS_TC_ROOT/$SS_TC_INSTALL  compile</command>
+    </build_commands>
+    <iopairs>
+        <iopair name="J-C774B-CMUD-10-ST03-DT03-DF18-CF02-01-GOOD-01" reset_scheme="NONE" timeout="300" type="GOOD">
+            <description>register a character, become an archon (essentially a superuser), destroy character
+Environment variable defining number of files to create.
+</description>
+            <technical_impact>NONE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf '' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555</script>
+                        </process>
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_01_SCRIPT" type="USE_TEXT">sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-01/good_01.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_h2XgyCPJq6" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;5&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_xkkDoPnNna" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="GOOD-01-Default">
+                <formula name="GOOD-01-Default">GOOD-01-01 AND GOOD-01-02 AND GOOD-01-03 AND NOT TIMEOUT AND NOT CONTROLLED_EXIT</formula>
+            </scoring_formula>
+            <output_checks>
+                <compare_check check_type="CONTAINS" name="GOOD-01-01">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-01/good-01-01.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-01-02">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-01/good-01-02.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-01-03">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-01/good-01-03.txt</expected>
+                </compare_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="TIMEOUT" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="CONTROLLED_EXIT" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C774B-CMUD-10-ST03-DT03-DF18-CF02-01-GOOD-02" reset_scheme="NONE" timeout="300" type="GOOD">
+            <description>register character, become archon, check inventory, destroy character
+Environment variable defining number of files to create.
+</description>
+            <technical_impact>NONE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf '' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_02_SCRIPT" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-02/good_02.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_IjIPRgaxDi" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;678&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_DE6gHbCRiH" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="GOOD-02-Default">
+                <formula name="GOOD-02-Default">GOOD-02-01 AND GOOD-02-02 AND GOOD-02-03 AND GOOD-02-04 AND NOT TIMEOUT AND NOT CONTROLLED_EXIT</formula>
+            </scoring_formula>
+            <output_checks>
+                <compare_check check_type="CONTAINS" name="GOOD-02-01">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-02/good-02-01.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-02-02">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-02/good-02-02.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-02-03">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-02/good-02-03.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-02-04">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-02/good-02-04.txt</expected>
+                </compare_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="TIMEOUT" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="CONTROLLED_EXIT" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C774B-CMUD-10-ST03-DT03-DF18-CF02-01-GOOD-03" reset_scheme="NONE" timeout="300" type="GOOD">
+            <description>register character, become archon, auto-generate a dungeon, move room, destroy character
+Environment variable defining number of files to create.
+</description>
+            <technical_impact>NONE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf '' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_03_SCRIPT" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-03/good_03.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_21E0ckI96i" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;2500&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_4YcCkulSOw" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="GOOD-03-Default">
+                <formula name="GOOD-03-Default">GOOD-03-01 AND GOOD-03-02 AND GOOD-03-03 AND GOOD-03-04 AND NOT TIMEOUT AND NOT CONTROLLED_EXIT</formula>
+            </scoring_formula>
+            <output_checks>
+                <compare_check check_type="CONTAINS" name="GOOD-03-01">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-03/good-03-01.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-03-02">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-03/good-03-02.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-03-03">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-03/good-03-03.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-03-04">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-03/good-03-04.txt</expected>
+                </compare_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="TIMEOUT" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="CONTROLLED_EXIT" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C774B-CMUD-10-ST03-DT03-DF18-CF02-01-GOOD-04" reset_scheme="NONE" timeout="300" type="GOOD">
+            <description>register character, become archon, auto-generate a dungeon, check inventory, hold torch, move room, destroy character
+Environment variable defining number of files to create.
+</description>
+            <technical_impact>NONE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf '' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_04_SCRIPT" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-04/good_04.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_hwFB5NUDDs" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;5&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_XMtJlhX4eP" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="GOOD-04-Default">
+                <formula name="GOOD-04-Default">GOOD-04-01 AND GOOD-04-02 AND GOOD-04-03 AND GOOD-04-05 AND NOT TIMEOUT AND NOT CONTROLLED_EXIT</formula>
+            </scoring_formula>
+            <output_checks>
+                <compare_check check_type="CONTAINS" name="GOOD-04-01">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-04/good-04-01.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-04-02">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-04/good-04-02.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-04-03">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-04/good-04-03.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-04-04">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-04/good-04-04.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-04-05">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-04/good-04-05.txt</expected>
+                </compare_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="TIMEOUT" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="CONTROLLED_EXIT" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C774B-CMUD-10-ST03-DT03-DF18-CF02-01-GOOD-05" reset_scheme="NONE" timeout="300" type="GOOD">
+            <description>register character, become archon, auto-generate a dungeon, search, check inventory, hold torch, move room, destroy character
+Environment variable defining number of files to create.
+</description>
+            <technical_impact>NONE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf '' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_05_SCRIPT" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-05/good_05.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_Irc2mI7EIK" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;678&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_P40eEuSOJX" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="GOOD-05-Default">
+                <formula name="GOOD-05-Default">GOOD-05-01 AND GOOD-05-02 AND GOOD-05-03 AND GOOD-05-04 AND GOOD-05-05 AND NOT TIMEOUT AND NOT CONTROLLED_EXIT</formula>
+            </scoring_formula>
+            <output_checks>
+                <compare_check check_type="CONTAINS" name="GOOD-05-01">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-05/good-05-01.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-05-02">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-05/good-05-02.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-05-03">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-05/good-05-03.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-05-04">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-05/good-05-04.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-05-05">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-05/good-05-05.txt</expected>
+                </compare_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="TIMEOUT" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="CONTROLLED_EXIT" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C774B-CMUD-10-ST03-DT03-DF18-CF02-01-GOOD-06" reset_scheme="NONE" timeout="300" type="GOOD">
+            <description>register character, become archon, export world-state to file, destroy character
+Environment variable defining number of files to create.
+</description>
+            <technical_impact>NONE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf '' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_06_SCRIPT" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-06/good_06.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_nNToj6dHIL" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;2500&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_rQe0NWbw6O" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="GOOD-06-Default">
+                <formula name="GOOD-06-Default">GOOD-06 AND NOT TIMEOUT AND NOT CONTROLLED_EXIT</formula>
+            </scoring_formula>
+            <output_checks>
+                <compare_check check_type="CONTAINS" name="GOOD-06">
+                    <actual output_type="FILE_CONTENTS">../testData/worldexport.txt</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-06/output.txt</expected>
+                </compare_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="TIMEOUT" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="CONTROLLED_EXIT" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C774B-CMUD-10-ST03-DT03-DF18-CF02-01-GOOD-07" reset_scheme="NONE" timeout="300" type="GOOD">
+            <description>register character, become archon, import area from file, list areas of world, destroy character
+Environment variable defining number of files to create.
+</description>
+            <technical_impact>NONE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf '' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_07_SCRIPT" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-07/good_07.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_HFFA1fVXvH" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;5&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_y8IwsdRlb8" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="GOOD-07-Default">
+                <formula name="GOOD-07-Default">(GOOD-07-01 OR GOOD-07-02) AND NOT TIMEOUT AND NOT CONTROLLED_EXIT</formula>
+            </scoring_formula>
+            <output_checks>
+                <compare_check check_type="CONTAINS" name="GOOD-07-01">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-07/output.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-07-02">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-07/output2.txt</expected>
+                </compare_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="TIMEOUT" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="CONTROLLED_EXIT" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C774B-CMUD-10-ST03-DT03-DF18-CF02-01-GOOD-08" reset_scheme="NONE" timeout="300" type="GOOD">
+            <description>register character, become archon, create a news entry, check news, destroy character
+Environment variable defining number of files to create.
+</description>
+            <technical_impact>NONE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf '' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_08_SCRIPT" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-08/good_08.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_onhAqv9JEc" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;678&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_xRLLm4Zr9o" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="GOOD-08-Default">
+                <formula name="GOOD-08-Default">GOOD-08-HEADER AND GOOD-08-SUBJECT AND NOT TIMEOUT AND NOT CONTROLLED_EXIT</formula>
+            </scoring_formula>
+            <output_checks>
+                <compare_check check_type="CONTAINS" name="GOOD-08-HEADER">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-08/header.txt</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="GOOD-08-SUBJECT">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-08/subject.txt</expected>
+                </compare_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="TIMEOUT" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="CONTROLLED_EXIT" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C774B-CMUD-10-ST03-DT03-DF18-CF02-01-GOOD-09" reset_scheme="NONE" timeout="300" type="GOOD">
+            <description>register character, become archon, create mobs, have them fight, destroy character
+Environment variable defining number of files to create.
+</description>
+            <technical_impact>NONE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf '' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_09_SCRIPT" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-09/good_09.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_TJJdMKIQqe" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;2500&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_69L2M7c1PK" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="GOOD-09-Default">
+                <formula name="GOOD-09-Default">GOOD-09 AND NOT TIMEOUT AND NOT CONTROLLED_EXIT</formula>
+            </scoring_formula>
+            <output_checks>
+                <compare_check check_type="CONTAINS" name="GOOD-09">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_TEXT">is DEAD!!!</expected>
+                </compare_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="TIMEOUT" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="CONTROLLED_EXIT" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C774B-CMUD-10-ST03-DT03-DF18-CF02-01-GOOD-10" reset_scheme="NONE" timeout="300" type="GOOD">
+            <description>register character, become archon, generate an average level 5 bard, destroy character
+Environment variable defining number of files to create.
+</description>
+            <technical_impact>NONE</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf '' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_10_SCRIPT" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-10/good_10.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_rPxU8r5iOt" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;5&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_9EH4iDyLcJ" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="GOOD-10-Default">
+                <formula name="GOOD-10-Default">GOOD-10 AND NOT TIMEOUT AND NOT CONTROLLED_EXIT</formula>
+            </scoring_formula>
+            <output_checks>
+                <compare_check check_type="CONTAINS" name="GOOD-10">
+                    <actual output_type="FILE_CONTENTS">../testData/screenlog.0</actual>
+                    <expected encoding="STRING" type="USE_FILE_CONTENTS">good-10/output.txt</expected>
+                </compare_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="TIMEOUT" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="CONTROLLED_EXIT" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C774B-CMUD-10-ST03-DT03-DF18-CF02-01-BAD-01" reset_scheme="NONE" timeout="300" type="BAD">
+            <description>Environment variable defining number of files to create.
+</description>
+            <technical_impact>DOS_RESOURCE_CONSUMPTION</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf '' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555</script>
+                        </process>
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_01_SCRIPTWfW0a7hhsI" type="USE_TEXT">sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-01/good_01.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_ijuPa3POssF3PDOfYj1m" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;20000&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_UPZjHh9CAl8mZd5UX49S" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="log_fail_check_e9tL2N1A0V" type="USE_TEXT">if (( $(pcregrep -Mc &quot;Failed to create new file, moving on\.\n\d+&quot; &quot;logfile.txt&quot;) &gt; 0 )); then echo &quot;FAILED&quot;; else echo &quot;OK&quot;; fi;</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="logfile_cleanup_pattern_occurrences_WUGUQi5TFV" type="USE_TEXT">printf &quot;Cleanup pattern repeated $(pcregrep -Mc &quot;&quot;&quot;Failed to create new file, moving on\.\n\d+&quot;&quot;&quot; &quot;logfile.txt&quot;) times\n&quot;</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="logfile_cleanup_anvKC3sOTI" type="USE_TEXT">SS_TC_TEMPFILE=&quot;$(mktemp)&quot; &amp;&amp; pcregrep -Mv &quot;Failed to create new file, moving on\.\n\d+&quot; &quot;logfile.txt&quot; &gt; &quot;$SS_TC_TEMPFILE&quot; &amp;&amp; rm &quot;logfile.txt&quot; &amp;&amp; mv &quot;$SS_TC_TEMPFILE&quot; &quot;logfile.txt&quot; &amp;&amp; printf &quot;Cleaned pattern from logfile.\n&quot;</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="file_handles_error_formula_FR14Fw8YTF">
+                <formula name="file_handles_error_formula_FR14Fw8YTF">weakness_started_488DTxpksxvOcU7pd0mb AND ((NOT PERFORMER AND (failed_to_create_file_BgUmKjpsLn) AND NOT timeout_yAXcChmliP) or (PERFORMER AND NOT ((failed_to_create_file_BgUmKjpsLn) OR timeout_yAXcChmliP OR controlled_exit_KQPPfEAlC3)))</formula>
+                <formula name="no_weakness_started_formula_zpbHX1bvv7">(NOT PERFORMER AND (failed_to_create_file_BgUmKjpsLn) AND NOT timeout_yAXcChmliP) or (PERFORMER AND NOT ((failed_to_create_file_BgUmKjpsLn) OR timeout_yAXcChmliP OR controlled_exit_KQPPfEAlC3))</formula>
+            </scoring_formula>
+            <output_checks>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="timeout_yAXcChmliP" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="controlled_exit_KQPPfEAlC3" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="continued_execution_yWqoiq5VFD" type="USE_TEXT">CONTINUED_EXECUTION</simple_check>
+                <compare_check check_type="CONTAINS" name="failed_to_create_file_BgUmKjpsLn">
+                    <actual encoding="STRING" input_id_ref="log_fail_check_e9tL2N1A0V" output_type="STANDARD_OUT">None</actual>
+                    <expected encoding="STRING" type="USE_TEXT">FAILED</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="weakness_started_488DTxpksxvOcU7pd0mb">
+                    <actual encoding="STRING" input_id_ref="lttng_output_UPZjHh9CAl8mZd5UX49S" output_type="STANDARD_OUT">None</actual>
+                    <expected encoding="STRING" type="USE_TEXT">stonesoup_trace:weakness_start</expected>
+                </compare_check>
+            </output_checks>
+        </iopair>
+        <iopair name="J-C774B-CMUD-10-ST03-DT03-DF18-CF02-01-BAD-02" reset_scheme="NONE" timeout="300" type="BAD">
+            <description>Environment variable defining number of files to create.
+</description>
+            <technical_impact>DOS_RESOURCE_CONSUMPTION</technical_impact>
+            <pre_processes scheme="SEQUENCE">
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">printf '' | tee nginx_conf_env.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">dd if=/dev/urandom count=1 bs=512 2&gt; /dev/null | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -1 &gt;/tmp/screen_name.txt; cat /tmp/screen_name.txt</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <environment_variable encoding="STRING" key="SS_SCREEN_NAME" type="USE_FILE_CONTENTS">/tmp/screen_name.txt</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir $SS_TC_ROOT/logs/execute/lttng</script>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="LTTNG_HOME" type="USE_TEXT">$SS_TC_ROOT/logs/execute/lttng</environment_variable>
+                </process>
+                <process>
+                    <environment_variable encoding="STRING" key="SS_RUN_COMMAND_LD_PRELOAD" type="USE_TEXT">$SS_TC_DEPS/lib64/liblttng-stonesoup-java.so:$SS_TC_DEPS/lib64/liblttng-ust-fork.so</environment_variable>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">mkdir -p $SS_TC_DEPS/var/run/lttng</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">$SS_TC_DEPS/bin/lttng create &amp;&amp; $SS_TC_DEPS/bin/lttng enable-event -u -a &amp;&amp; $SS_TC_DEPS/bin/lttng start</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/lockDir</script>
+                </process>
+            </pre_processes>
+            <run_command encoding="STRING" preprend_runcommand="true" type="USE_TEXT"></run_command>
+            <co_processes scheme="SEQUENCE">
+                <process_group scheme="PARALLEL">
+                    <process_group scheme="SEQUENCE">
+                        <process delay_after="0" delay_before="0">
+                            <script background="false" encoding="STRING" input_id="GOOD_06_SCRIPT71HS2BX5db" type="USE_TEXT">$SS_TC_ROOT/scripts/service_mon.sh ss-localhost 5555 &amp;&amp; sleep 22 &amp;&amp; screen -dmSL ${SS_SCREEN_NAME//[$'\t\r\n ']} &quot;$SS_TC_DEPS/bin/tt++&quot; &quot;$SS_TC_ROOT/testData/good-06/good_06.tin&quot;; while [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; do sleep 1; done;</script>
+                        </process>
+                    </process_group>
+                    <process_group scheme="SEQUENCE">
+                        <process>
+                            <script background="false" encoding="STRING" input_id="socket_9oNf64ophcYKBGrr9nBf" type="USE_TEXT">/opt/stonesoup/workspace/scripts/service_mon.sh ss-localhost 8887 &amp;&amp; curl -v --data-urlencode data=&quot;30000&quot; --header &quot;If-Match: weak_taint_source_value&quot; --request POST --no-buffer --output /opt/stonesoup/workspace/testData/logfile.txt --silent --show-error http://ss-localhost:8887</script>
+                        </process>
+                    </process_group>
+                </process_group>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">kill $(ps aux | grep 'coffee_mud' | grep -v 'grep' |  awk '{print $2}'); echo &quot;Killed coffee_mud&quot;; date</script>
+                </process>
+            </co_processes>
+            <post_processes scheme="SEQUENCE">
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">if [[ `screen -ls` == *${SS_SCREEN_NAME//[$'\t\r\n ']}* ]]; then screen -X -S ${SS_SCREEN_NAME//[$'\t\r\n ']} quit; fi</script>
+                </process>
+                <process delay_after="0" delay_before="0">
+                    <script background="false" encoding="STRING" type="USE_TEXT">rm -rf $SS_TC_ROOT/$SS_TC_INSTALL/resources/fakedb/fakedb.data.*</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="lttng_output_mvy0i3Jts9yjc2Y3LgYS" type="USE_TEXT">$SS_TC_DEPS/bin/lttng stop &amp;&amp; $SS_TC_DEPS/bin/lttng view &amp;&amp; $SS_TC_DEPS/bin/lttng destroy</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="log_fail_check_qIUDEZKx9L" type="USE_TEXT">if (( $(pcregrep -Mc &quot;Failed to create new file, moving on\.\n\d+&quot; &quot;logfile.txt&quot;) &gt; 0 )); then echo &quot;FAILED&quot;; else echo &quot;OK&quot;; fi;</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="logfile_cleanup_pattern_occurrences_RBI6p3tiZ1" type="USE_TEXT">printf &quot;Cleanup pattern repeated $(pcregrep -Mc &quot;&quot;&quot;Failed to create new file, moving on\.\n\d+&quot;&quot;&quot; &quot;logfile.txt&quot;) times\n&quot;</script>
+                </process>
+                <process>
+                    <script background="false" encoding="STRING" input_id="logfile_cleanup_Ez9V28XpoP" type="USE_TEXT">SS_TC_TEMPFILE=&quot;$(mktemp)&quot; &amp;&amp; pcregrep -Mv &quot;Failed to create new file, moving on\.\n\d+&quot; &quot;logfile.txt&quot; &gt; &quot;$SS_TC_TEMPFILE&quot; &amp;&amp; rm &quot;logfile.txt&quot; &amp;&amp; mv &quot;$SS_TC_TEMPFILE&quot; &quot;logfile.txt&quot; &amp;&amp; printf &quot;Cleaned pattern from logfile.\n&quot;</script>
+                </process>
+            </post_processes>
+            <scoring_formula default="file_handles_error_formula_9DjkSzu2c4">
+                <formula name="file_handles_error_formula_9DjkSzu2c4">weakness_started_kaGiDg4IRFnfg9hzA35D AND ((NOT PERFORMER AND (failed_to_create_file_Eq75yZQ1vD) AND NOT timeout_Wui8L0IE58) or (PERFORMER AND NOT ((failed_to_create_file_Eq75yZQ1vD) OR timeout_Wui8L0IE58 OR controlled_exit_j9P8lid3N9)))</formula>
+                <formula name="no_weakness_started_formula_qbAhiMqxuA">(NOT PERFORMER AND (failed_to_create_file_Eq75yZQ1vD) AND NOT timeout_Wui8L0IE58) or (PERFORMER AND NOT ((failed_to_create_file_Eq75yZQ1vD) OR timeout_Wui8L0IE58 OR controlled_exit_j9P8lid3N9))</formula>
+            </scoring_formula>
+            <output_checks>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="timeout_Wui8L0IE58" type="USE_TEXT">DOES_NOT_RETURN</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="controlled_exit_j9P8lid3N9" type="USE_TEXT">CONTROLLED_EXIT</simple_check>
+                <simple_check check_type="SPECIAL" encoding="STRING" name="continued_execution_9xSiqb2sGx" type="USE_TEXT">CONTINUED_EXECUTION</simple_check>
+                <compare_check check_type="CONTAINS" name="failed_to_create_file_Eq75yZQ1vD">
+                    <actual encoding="STRING" input_id_ref="log_fail_check_qIUDEZKx9L" output_type="STANDARD_OUT">None</actual>
+                    <expected encoding="STRING" type="USE_TEXT">FAILED</expected>
+                </compare_check>
+                <compare_check check_type="CONTAINS" name="weakness_started_kaGiDg4IRFnfg9hzA35D">
+                    <actual encoding="STRING" input_id_ref="lttng_output_mvy0i3Jts9yjc2Y3LgYS" output_type="STANDARD_OUT">None</actual>
+                    <expected encoding="STRING" type="USE_TEXT">stonesoup_trace:weakness_start</expected>
+                </compare_check>
+            </output_checks>
+        </iopair>
+    </iopairs>
+</project>

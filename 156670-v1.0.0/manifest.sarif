@@ -1,0 +1,112 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "properties": {
+        "id": 156670,
+        "version": "1.0.0",
+        "type": "source code",
+        "status": "candidate",
+        "submissionDate": "2015-10-06",
+        "language": "java",
+        "author": "IARPA STONESOUP Test and Evaluation team",
+        "description": "The product does not properly check inputs that are used for\n loop conditions, potentially leading to a denial of service because of\n excessive looping. This test will try to access a user-controlled file,\n repeatedly trying if the access fails. The user provides an intentionally\n bad path, forcing the software to wait forever.\nMetadata\n - Base program: Coffee MUD\n - Source Taint: SOCKET\n - Data Type: VOID_POINTER\n - Data Flow: BASIC\n - Control Flow: SEQUENCE",
+        "state": "bad",
+        "application": "cpe:2.3:a:bo_zimmerman:coffeemud:5.8:*:*:*:*:*:*:*",
+        "dependencies": [
+          "stonesoup-vm-v3.0",
+          "coffeemud-v5.8"
+        ]
+      },
+      "tool": {
+        "driver": {
+          "name": "SARD - SAMATE",
+          "fullName": "Software Assurance Reference Dataset Project",
+          "informationUri": "https://samate.nist.gov/SARD/",
+          "version": "5.0.0",
+          "organization": "NIST",
+          "supportedTaxonomies": [
+            {
+              "name": "CWE",
+              "index": 0
+            }
+          ]
+        }
+      },
+      "artifacts": [
+        {
+          "location": {
+            "uri": "J-C606A-CMUD-07-ST03-DT03-DF11-CF20-01.xml"
+          },
+          "length": 86563,
+          "sourceLanguage": "xml",
+          "hashes": {
+            "sha-256": "be532196d701f3ef31cd51e2ac4e2b4652e9c69da676d8d1f82c0b3498dc0349"
+          }
+        },
+        {
+          "location": {
+            "uri": "src/com/planet_ink/coffee_mud/CharClasses/StdCharClass.java"
+          },
+          "length": 45199,
+          "sourceLanguage": "java",
+          "hashes": {
+            "sha-256": "d69dddbc2e6081fdf9b96664a1e04a83897bea4031851efb48223488902db70f"
+          }
+        }
+      ],
+      "taxonomies": [
+        {
+          "name": "CWE",
+          "version": "4.6",
+          "informationUri": "https://cwe.mitre.org/data/published/cwe_v4.6.pdf",
+          "downloadUri": "https://cwe.mitre.org/data/xml/cwec_v4.6.xml.zip",
+          "organization": "MITRE",
+          "shortDescription": {
+            "text": "The MITRE Common Weakness Enumeration"
+          },
+          "isComprehensive": false,
+          "taxa": [
+            {
+              "id": "606",
+              "name": "Unchecked Input for Loop Condition"
+            }
+          ]
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "CWE-606",
+          "message": {
+            "text": "Unchecked Input for Loop Condition."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/com/planet_ink/coffee_mud/CharClasses/StdCharClass.java",
+                  "index": 1
+                },
+                "region": {
+                  "startLine": 537,
+                  "endLine": 552
+                }
+              }
+            }
+          ],
+          "taxa": [
+            {
+              "toolComponent": {
+                "name": "CWE",
+                "index": 0
+              },
+              "id": "606",
+              "index": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

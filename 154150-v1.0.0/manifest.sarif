@@ -1,0 +1,112 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "properties": {
+        "id": 154150,
+        "version": "1.0.0",
+        "type": "source code",
+        "status": "candidate",
+        "submissionDate": "2015-10-06",
+        "language": "java",
+        "author": "IARPA STONESOUP Test and Evaluation team",
+        "description": "This test reads data from a sensitive file without checking\n the return value, and then repeats the operation on a non-sensitive file,\n then printing the second file. Technical Impact is information leakage.\nMetadata\n - Base program: Coffee MUD\n - Source Taint: FILE_CONTENTS\n - Data Type: SIMPLE\n - Data Flow: INDEX_ALIAS_1\n - Control Flow: INTERRUPT",
+        "state": "bad",
+        "application": "cpe:2.3:a:bo_zimmerman:coffeemud:5.8:*:*:*:*:*:*:*",
+        "dependencies": [
+          "stonesoup-vm-v3.0",
+          "coffeemud-v5.8"
+        ]
+      },
+      "tool": {
+        "driver": {
+          "name": "SARD - SAMATE",
+          "fullName": "Software Assurance Reference Dataset Project",
+          "informationUri": "https://samate.nist.gov/SARD/",
+          "version": "5.0.0",
+          "organization": "NIST",
+          "supportedTaxonomies": [
+            {
+              "name": "CWE",
+              "index": 0
+            }
+          ]
+        }
+      },
+      "artifacts": [
+        {
+          "location": {
+            "uri": "J-C252B-CMUD-01-ST02-DT02-DF07-CF16-01.xml"
+          },
+          "length": 93179,
+          "sourceLanguage": "xml",
+          "hashes": {
+            "sha-256": "ae48fb532b0e1fc1919c52ce8260ceb79776419c47d64357f82b2d09e93134e0"
+          }
+        },
+        {
+          "location": {
+            "uri": "src/com/planet_ink/coffee_mud/Common/interfaces/Session.java"
+          },
+          "length": 57206,
+          "sourceLanguage": "java",
+          "hashes": {
+            "sha-256": "4c40091ac106682408eb9e6a6df571f0a4fb930c4c4a28a92e480295c38e2d7b"
+          }
+        }
+      ],
+      "taxonomies": [
+        {
+          "name": "CWE",
+          "version": "4.6",
+          "informationUri": "https://cwe.mitre.org/data/published/cwe_v4.6.pdf",
+          "downloadUri": "https://cwe.mitre.org/data/xml/cwec_v4.6.xml.zip",
+          "organization": "MITRE",
+          "shortDescription": {
+            "text": "The MITRE Common Weakness Enumeration"
+          },
+          "isComprehensive": false,
+          "taxa": [
+            {
+              "id": "252",
+              "name": "Unchecked Return Value"
+            }
+          ]
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "CWE-252",
+          "message": {
+            "text": "Unchecked Return Value."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/com/planet_ink/coffee_mud/Common/interfaces/Session.java",
+                  "index": 1
+                },
+                "region": {
+                  "startLine": 1313,
+                  "endLine": 1316
+                }
+              }
+            }
+          ],
+          "taxa": [
+            {
+              "toolComponent": {
+                "name": "CWE",
+                "index": 0
+              },
+              "id": "252",
+              "index": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

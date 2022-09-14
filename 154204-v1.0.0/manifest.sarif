@@ -1,0 +1,112 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "properties": {
+        "id": 154204,
+        "version": "1.0.0",
+        "type": "source code",
+        "status": "candidate",
+        "submissionDate": "2015-10-06",
+        "language": "java",
+        "author": "IARPA STONESOUP Test and Evaluation team",
+        "description": "This test takes input in the form of an integer\n and creates an array of that size. If the input is too large\n an exception is raised and the array is initialized to a\n default size without ever changing the size variable. This\n leads to an ArrayIndexoutOfBoundsException when the array\n is accessed.\nMetadata\n - Base program: Coffee MUD\n - Source Taint: SOCKET\n - Data Type: SIMPLE\n - Data Flow: BASIC\n - Control Flow: INTERRUPT",
+        "state": "bad",
+        "application": "cpe:2.3:a:bo_zimmerman:coffeemud:5.8:*:*:*:*:*:*:*",
+        "dependencies": [
+          "stonesoup-vm-v3.0",
+          "coffeemud-v5.8"
+        ]
+      },
+      "tool": {
+        "driver": {
+          "name": "SARD - SAMATE",
+          "fullName": "Software Assurance Reference Dataset Project",
+          "informationUri": "https://samate.nist.gov/SARD/",
+          "version": "5.0.0",
+          "organization": "NIST",
+          "supportedTaxonomies": [
+            {
+              "name": "CWE",
+              "index": 0
+            }
+          ]
+        }
+      },
+      "artifacts": [
+        {
+          "location": {
+            "uri": "J-C460A-CMUD-02-ST03-DT02-DF11-CF16-01.xml"
+          },
+          "length": 84635,
+          "sourceLanguage": "xml",
+          "hashes": {
+            "sha-256": "98ef3461c376cf77e850335f4babe0b91dda03b08589d0c7e72ea11628e2484e"
+          }
+        },
+        {
+          "location": {
+            "uri": "src/com/planet_ink/coffee_mud/Libraries/CharCreation.java"
+          },
+          "length": 129669,
+          "sourceLanguage": "java",
+          "hashes": {
+            "sha-256": "411aa89970c07cd271973f870b294ad225890f3802024c67442cf694e3fd656b"
+          }
+        }
+      ],
+      "taxonomies": [
+        {
+          "name": "CWE",
+          "version": "4.6",
+          "informationUri": "https://cwe.mitre.org/data/published/cwe_v4.6.pdf",
+          "downloadUri": "https://cwe.mitre.org/data/xml/cwec_v4.6.xml.zip",
+          "organization": "MITRE",
+          "shortDescription": {
+            "text": "The MITRE Common Weakness Enumeration"
+          },
+          "isComprehensive": false,
+          "taxa": [
+            {
+              "id": "460",
+              "name": "Improper Cleanup on Thrown Exception"
+            }
+          ]
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "CWE-460",
+          "message": {
+            "text": "Improper Cleanup on Thrown Exception."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/com/planet_ink/coffee_mud/Libraries/CharCreation.java",
+                  "index": 1
+                },
+                "region": {
+                  "startLine": 2993,
+                  "endLine": 2996
+                }
+              }
+            }
+          ],
+          "taxa": [
+            {
+              "toolComponent": {
+                "name": "CWE",
+                "index": 0
+              },
+              "id": "460",
+              "index": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
